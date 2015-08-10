@@ -26,18 +26,18 @@
 
 class kernel_core::no {
     case $::osfamily {
-        'redhat': {
+        'RedHat': {
             service { 'kdump': 
                 enable => false,
                 ensure => stopped,
             }
         }
-        'darwin': {
+        'Darwin': {
             augeas { 'sysctl_kern_coredump_off':
                 context => '/files/etc/sysctl.conf',
                 changes => 'set kern.coredump 0',
             }
         }
-        default:  { unimplemented() }
+        default:  { fail "unimplemented on ${::osfamily}" }
     }
 }
